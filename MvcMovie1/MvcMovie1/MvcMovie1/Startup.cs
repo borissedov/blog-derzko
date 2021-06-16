@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using MvcMovie.Data;
 
 namespace CustomIdentityApp
 {
@@ -18,18 +19,12 @@ namespace CustomIdentityApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Models.DbContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<Models.DbContext>();
+                .AddEntityFrameworkStores<ApplicationContext>();
             
-            services.AddDbContext<Models.DbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<Models.DbContext>();
-
             services.AddControllersWithViews();
         }
 
